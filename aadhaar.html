@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhar Verification</title>
+    <link rel="icon" type="image/x-icon" href="./images/aadhar_logo.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary shadow-sm border-bottom">
+        <div class="container justify-content-center">
+            <a class="navbar-brand" href="#">
+                <img src="./images/aadhar_logo.jpg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top fw-bold">
+                Aadhar Verification
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- enter your aadhar no -->
+        <div class="card col-md-5 mx-auto my-3 shadow-sm" id="enter_aadhar">
+            <div class="card-body">
+                <h5 class="my-3 text-center">Enter Your Aadhar Card No</h5>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-fingerprint"></i></span>
+                    <input type="number" class="form-control" id="aadhar" placeholder="Enter your 12 digit Aadhar no"
+                        aria-label="Aadhar" aria-describedby="basic-addon1">
+                </div>
+                <div id="aerrormessage" class="form-text mb-3 text-danger"></div>
+                <button class="btn btn-danger w-100" id="aadhar_btn">Submit</button>
+                <button class="btn btn-danger w-100 my-2" id="aadhar_loading_btn" style="display:none" disabled>
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div> Processing...
+                </button>
+            </div>
+        </div>
+
+        <!-- enter your mobile no -->
+        <div class="card col-md-5 mx-auto my-3 shadow-sm" id="enter_mobile" style="display:none;">
+            <div class="card-body">
+                <h5 class="my-3 text-center">Enter the mobile number linked with your Aadhar card.</h5>
+                <form id="mobile_form" action="#">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon2"><i class="bi bi-phone"></i></span>
+                        <input type="number" class="form-control" id="mobile" placeholder="Enter your 10 digit Mobile no"
+                            aria-label="Mobile" aria-describedby="basic-addon2">
+                    </div>
+                    <div id="merrormessage" class="form-text mb-3 text-danger"></div>
+                    <button class="btn btn-danger w-100" id="mobile_btn">Send OTP</button>
+                    <button class="btn btn-danger w-100 my-2" id="mobile_loading_btn" style="display:none" disabled>
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div> Processing...
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- OTP Section -->
+        <div class="card col-md-5 mx-auto my-3 shadow-sm" id="otp_section" style="display: none;">
+            <div class="card-body">
+                <h5 class="my-3 text-center">Enter the OTP sent to your mobile number.</h5>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon3"><i class="bi bi-key"></i></span>
+                    <input type="text" class="form-control" id="otp" placeholder="Enter OTP"
+                        aria-label="OTP" aria-describedby="basic-addon3">
+                </div>
+                <div id="otp_message" class="form-text mb-3 text-danger"></div>
+                <button class="btn btn-danger w-100" id="otp_btn">Verify OTP</button>
+                <button class="btn btn-danger w-100 my-2" id="resend_otp_btn">Resend OTP</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function () {
+        // Aadhar Button Click Event
+        $("#aadhar_btn").click(function () {
+            $("#aerrormessage").text('');
+            let aadhar_no = $("#aadhar").val();
+
+            // Check if Aadhar number is valid
+            if (aadhar_no.length !== 12) {
+                $("#aerrormessage").text('Please enter a valid 12-digit Aadhar number.');
+                return;
+            }
+
+            // Hide the button and show loading spinner
+            $(this).hide();
+            $("#aadhar_loading_btn").show();
+
+            console.log("Aadhar Number:", aadhar_no); // Debug: Log Aadhar number
+
+            // AJAX call to check if Aadhar exists in database
+            $.ajax({
+                url: 'check_aadhar.php',
+                dataType: 'json',
+                method: 'POST',
+                data: {
+                    aadhar: aadhar_no
+                },
+                success: function (res) {
+                    if (res.exists) {
+                        // Aadhar exists in the database, show Mobile input
+                        $("#enter_aadhar").hide();
+                        $("#enter_mobile").show();
+
+                        // Mobile Button Click Event
+                        $("#mobile_btn").click(function (e) {
+                            e.preventDefault();
+                            $("#merrormessage").text('');
+                            let mobile_no = $("#mobile").val();
+
+                            // Check if Mobile number is valid
+                            if (mobile_no.length !== 10) {
+                                $("#merrormessage").text('Please enter a valid 10-digit Mobile number.');
+                                return;
+                            }
+
+                            // Hide the button and show loading spinner
+                            $(this).hide();
+                            $("#mobile_loading_btn").show();
+
+                            console.log("Mobile Number:", mobile_no); // Debug: Log Mobile number
+
+                            // AJAX call to send OTP
+                            $.ajax({
+                                url: 'send_otp.php',
+                                dataType: 'json',
+                                method: 'POST',
+                                data: {
+                                    mobile: mobile_no
+                                },
+                                success: function (res) {
+                                    if (res.success) {
+                                        $("#otp_section").show();
+                                        $("#enter_mobile").hide();
+                                    } else {
+                                        $("#merrormessage").text(res.message);
+                                        $("#mobile_btn").show();
+                                        $("#mobile_loading_btn").hide();
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log('Error sending OTP:', res.responseText);
+                                    $("#merrormessage").text('The Mobile number you have entered does not match with our records');
+                                    $("#mobile_btn").show();
+                                    $("#mobile_loading_btn").hide();
+                                }
+                            });
+                        });
+
+                        // Verify OTP Button Click Event
+                        $("#otp_btn").click(function () {
+                            let entered_otp = $("#otp").val();
+
+                            // Check if OTP is not empty
+                            if (entered_otp === "") {
+                                $("#otp_message").text('Please enter the OTP.');
+                                return;
+                            }
+
+                            // AJAX call to verify OTP
+                            $.ajax({
+                                url: 'verify_otp.php',
+                                dataType: 'json',
+                                method: 'POST',
+                                data: {
+                                    otp: entered_otp
+                                },
+                                success: function (res) {
+                                    if (res.success) {
+                                        $("#otp_message").text("OTP Verified Successfully!");
+                                        // Additional actions after OTP verification
+                                        window.location.href = "success_page.html";
+                                    } else {
+                                        $("#otp_message").text("Error verifying OTP.");
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log('Error verifying OTP:', res.responseText);
+                                    $("#otp_message").text("Error verifying OTP.");
+                                }
+                            });
+                        });
+
+                        // Resend OTP Button Click Event
+                        $("#resend_otp_btn").click(function () {
+                            let mobile_no = $("#mobile").val();
+
+                            // Check if Mobile number is valid
+                            if (mobile_no.length !== 10) {
+                                $("#merrormessage").text('Please enter a valid 10-digit Mobile number.');
+                                return;
+                            }
+
+                            // AJAX call to resend OTP
+                            $.ajax({
+                                url: 'resend_otp.php',
+                                dataType: 'json',
+                                method: 'POST',
+                                data: {
+                                    mobile: mobile_no
+                                },
+                                success: function (res) {
+                                    if (res.success) {
+                                        $("#otp_message").text(res.message);
+                                    } else {
+                                        $("#otp_message").text(res.message);
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log('Error resending OTP:', res.responseText);
+                                    $("#otp_message").text('Error resending OTP. Please try again.');
+                                }
+                            });
+                        });
+
+                    } else {
+                        $("#aerrormessage").text("Aadhar number not found in the database.");
+                        $("#aadhar_btn").show();
+                        $("#aadhar_loading_btn").hide();
+                    }
+                },
+                error: function (res) {
+                    console.log('Error checking Aadhar number:', res.responseText);
+                    $("#aerrormessage").text('Error checking Aadhar number.');
+                    $("#aadhar_btn").show();
+                    $("#aadhar_loading_btn").hide();
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+

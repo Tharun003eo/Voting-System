@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feedback - CIVIC POLL</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+    <!-- Internal CSS for specific styles -->
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            background-color: #ffffff;
+        }
+
+        .headerFont {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 24px;
+        }
+
+        .subFont {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+        }
+
+        .specialHead {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .normalFont {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .form-group label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-submit {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-submit:hover {
+            background-color: #4cae4c;
+            border-color: #398439;
+        }
+
+        .extra-design {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .btn-back-home {
+            display: block;
+            margin: 30px auto;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-back-home:hover {
+            background-color: #4cae4c;
+            border-color: #398439;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-header">
+                <a href="index.html" class="navbar-brand headerFont text-lg"><strong>eVoting</strong></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-nav-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#featuresTab"><span class="subFont"><strong>Features</strong></span></a></li>
+                    <li><a href="#aboutTab"><span class="subFont"><strong>About</strong></span></a></li>
+                    <li><a href="feedback.html"><span class="subFont"><strong>Feedback</strong></span></a></li>
+                </ul>
+
+                <div class="navbar-right">
+                    <span class="normalFont"><a href="admin.php" class="btn btn-success navbar-btn"><strong>Admin Panel</strong></a></span>
+                </div>
+            </div>
+        </div> <!-- end of container -->
+    </nav>
+</div>
+
+<div class="container form-container">
+    <h2 class="text-center specialHead">Feedback & Suggestions</h2>
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="953c1890-af63-4be7-a687-c5c56cad43db">
+        <div class="form-group">
+            <label for="email">From Email:</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Your email address" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Your Feedback and Suggestions:</label>
+            <textarea name="message" class="form-control" id="message" rows="5" placeholder="Your feedback here" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-submit">Submit</button>
+    </form>
+
+    <div class="extra-design">
+        <p>Thank you for your valuable feedback!</p>
+        <a href="index.html" class="btn-back-home">Back To Home</a>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <h2 class="specialHead">Sathis pandy.D<br>Tharun.S</h2>
+            </div>
+            <div class="col-sm-6 text-center">
+                <img src="images/Facebook.png" width="50" height="50" alt="">
+                <img src="images/Twitter.png" width="50" height="50" alt="">
+                <img src="images/GitHub.png" width="50" height="50" alt="">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
